@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/css/output.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <!-- Meta Tags SEO -->
+    <meta name="description" content="Encontre o CEP e veja a localização no mapa.">
+    <meta name="keywords" content="CEP, Buscador de CEP, Localização, Endereço">
+    <meta name="author" content="Guilherme Godoy">
+
+    <!-- Meta Tags OG -->
+    <meta property="og:title" content="Buscador de CEP">
+    <meta property="og:description" content="Encontre o CEP e veja a localização no mapa.">
+    <meta property="og:image" content="URL da imagem">
+    <meta property="og:url" content="URL da página">
+    <meta property="og:type" content="website">
+
+    <!-- Meta Tags Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Buscador de CEP">
+    <meta name="twitter:description" content="Encontre o CEP e veja a localização no mapa.">
+    <meta name="twitter:image" content="URL da imagem">
+    <meta name="twitter:url" content="URL da página">
+    <meta name="twitter:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <title>Buscador de CEP</title>
+</head>
+<body class="m-0 bg-[url('../assets/fundo.jpg')] bg-cover backdrop-brightness-35 min-h-screen text-white">
+    <main class="flex min-h-screen items-center">
+        <section class="flex flex-col fundo-card">
+            <h1>Buscador de CEP</h1>
+            <form>
+                <div class="flex gap-2">
+                    <p class="inline">Consultar:</p>
+                    
+                    <input type="radio" name="consultas" value="Por CEP" id="porCEP" checked>
+                    <label for="porCEP" class="mr-5">Por CEP</label>
+
+                    <input type="radio" name="consultas" value="Por Endereço" id="porEndereco">
+                    <label for="porEndereco">Por Endereço</label>
+                </div>
+                
+                <div id="formCep">
+                    <label for="entrada" id="lblEntrada">CEP:</label>
+                    <input type="text" name="entrada" id="entrada" placeholder="00000-000" required>
+                </div>
+
+                <div id="formEndereco" class="escondido">
+                    <label for="estado">Estado:</label>
+                    <input type="text" name="estado" id="estado" placeholder="UF">
+
+                    <label for="cidade">Cidade</label>
+                    <input type="text" name="cidade" id="cidade" placeholder="Cidade">
+
+                    <label for="rua">Rua</label>
+                    <input type="text" name="rua" id="rua" placeholder="Rua">
+                </div>
+                <p id="erro"></p>
+
+                <button type="submit" class="cursor-pointer block rounded-md bg-white text-black p-1 mt-10 w-full">Buscar</button>
+            </form>
+        </section>
+
+        <section class="flex-1 h-64">
+            <h2 class="text-center text-2xl font-bold mb-4">Localização no Mapa</h2>
+            <p id="saida" class="text-center mb-4">Insira o CEP ou Endereço para visualizar a localização no mapa.</p>
+            <div id="map" class="h-full w-full"></div>
+        </section>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha1/dist/leaflet.js"
+      }
+    }
+  </script>
+</body>
+</html>
