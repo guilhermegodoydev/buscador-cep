@@ -1,5 +1,6 @@
-import { GerarMapa } from "./modules/mapa.js";
-import { ValidarCep, BuscarEndereco } from "./modules/cep.js";
+import { GerarMapa, GerarMarcador, MarcarAreaMapa } from "./modules/mapa.js";
+import { ValidarCep, BuscarEndereco, BuscarCepPorEndereco, BuscarGeo } from "./modules/cep.js";
+import { AlterarEstadoInputs, ExibirMsgErro, MontarEnderecoCompleto } from "./modules/utils.js";
 
 const input = document.getElementById('entrada');
 const label = document.getElementById('lblEntrada');
@@ -10,6 +11,10 @@ const form = document.querySelector('form');
 const saida = document.getElementById('saida');
 const formCep = document.getElementById('formCep');
 const formEndereco = document.getElementById('formEndereco');
+const estado = document.getElementById('estado');
+const cidade = document.getElementById('cidade');
+const rua = document.getElementById('rua');
+const botao = document.getElementById('btnform');
 
 let tipoConsulta = 'cep';
 
@@ -18,66 +23,64 @@ GerarMapa();
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
 
-  const cep = input.value.replace('-','');
+  if (botao) botao.disabled = true;
 
-  if (tipoConsulta == 'cep') {
-    if (!ValidarCep(cep)) {
-      ExibirMsgErro('Digite um CEP válido com 8 dígitos.');
-      return;
+  msgErro.textContent = '';
+  let geo, enderecoExibicao;
+
+  try {
+    if (tipoConsulta == 'cep') {
+      const cep = input.value.replace(/\D/g, '');
+      if (!ValidarCep(cep)) {
+        ExibirMsgErro('Digite um CEP válido', msgErro, input);
+        return;
+      }
+      const dataCep = await BuscarEndereco(cep);
+      enderecoExibicao = MontarEnderecoCompleto(dataCep);
+      saida.textContent = 'Endereço: ' + enderecoExibicao;
+      geo = await BuscarGeo(enderecoExibicao);
+    } else {
+      const cepLocal = await BuscarCepPorEndereco(estado.value, cidade.value, rua.value);
+      saida.textContent = 'CEP: ' + cepLocal;
+      const dataCep = await BuscarEndereco(cepLocal);
+      enderecoExibicao = MontarEnderecoCompleto(dataCep);
+      geo = await BuscarGeo(enderecoExibicao);
     }
-    msgErro.textContent = '';
-    saida.textContent = await BuscarEndereco(cep);
+
+    GerarMarcador(geo.lat, geo.lon);
+    MarcarAreaMapa(geo.limitesbox.lat1, geo.limitesbox.lon1, geo.limitesbox.lat2, geo.limitesbox.lon2);
+  } catch (error) {
+    ExibirMsgErro('Erro ao buscar dados. Tente novamente.', msgErro, input);
+    console.error(error);
   }
-  else {
-    //saida.textContent = await;
-  }
+
+  if (botao) botao.disabled = false;
 });
 
-rdCEP.addEventListener('change', () => {
-  if (rdCEP.checked) {
+function AlternarConsulta(tipo) {
+  if (tipo === 'cep') {
     label.textContent = 'CEP:';
     input.placeholder = '00000-000';
-    input.value = '';
     tipoConsulta = 'cep';
-
+    AlterarEstadoInputs(formCep, true);
+    AlterarEstadoInputs(formEndereco, false);
     formCep.classList.remove('escondido');
-    let inputs2 = formCep.querySelectorAll('input');
-    inputs2.forEach(input => {
-      input.disabled = false;
-      input.required = true;
-    });
-
     formEndereco.classList.add('escondido');
-    let inputs = formEndereco.querySelectorAll('input');
-    inputs.forEach(input => {
-      input.disabled = true;
-      input.required = false;
-    });
-  }
-});
-
-rdEndereco.addEventListener('change', () => {
-  if (rdEndereco.checked) {
+  } else {
     label.textContent = 'Endereço:';
     input.placeholder = 'Rua, Bairro, Cidade';
-    input.value = '';
     tipoConsulta = 'endereco';
-
-    formEndereco.classList.remove('escondido');
-    let inputs2 = formEndereco.querySelectorAll('input');
-    inputs2.forEach(input => {
-      input.disabled = false;
-      input.required = true;
-    });
-
+    AlterarEstadoInputs(formCep, false);
+    AlterarEstadoInputs(formEndereco, true);
     formCep.classList.add('escondido');
-    let inputs = formCep.querySelectorAll('input');
-    inputs.forEach(input => {
-      input.disabled = true;
-      input.required = false;
-    });
+    formEndereco.classList.remove('escondido');
   }
-});
+  input.value = '';
+  msgErro.textContent = '';
+}
+
+rdCEP.addEventListener('change', () => AlternarConsulta('cep'));
+rdEndereco.addEventListener('change', () => AlternarConsulta('endereco'));
 
 input.addEventListener('input', () => {
   if (rdCEP.checked) {
@@ -89,9 +92,3 @@ input.addEventListener('input', () => {
     input.value = novoValue;
   }
 });
-
-function ExibirMsgErro(mensagem) {
-  msgErro.classList.add('msgErro');
-  msgErro.textContent = mensagem;
-  input.focus();
-}

@@ -166,9 +166,6 @@
   }
 }
 @layer utilities {
-  .m-0 {
-    margin: calc(var(--spacing) * 0);
-  }
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
   }
@@ -220,12 +217,6 @@
   .bg-white {
     background-color: var(--color-white);
   }
-  .bg-\[url\(\'\.\.\/assets\/fundo\.jpg\'\)\] {
-    background-image: url('../assets/fundo.jpg');
-  }
-  .bg-cover {
-    background-size: cover;
-  }
   .p-1 {
     padding: calc(var(--spacing) * 1);
   }
@@ -243,16 +234,18 @@
   .text-black {
     color: var(--color-black);
   }
-  .text-white {
+}
+@layer base {
+  body {
+    background-image: url('../assets/fundo.webp'), url('../assets//fundo.jpg');
+    margin: calc(var(--spacing) * 0);
+    min-height: 100vh;
+    background-size: cover;
     color: var(--color-white);
-  }
-  .backdrop-brightness-35 {
     --tw-backdrop-brightness: brightness(35%);
     -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
     backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
   }
-}
-@layer base {
   label {
     margin-top: calc(var(--spacing) * 2);
     display: block;

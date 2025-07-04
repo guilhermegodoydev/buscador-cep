@@ -33,7 +33,7 @@
 
     <title>Buscador de CEP</title>
 </head>
-<body class="m-0 bg-[url('../assets/fundo.jpg')] bg-cover backdrop-brightness-35 min-h-screen text-white">
+<body>
     <main class="flex min-h-screen items-center">
         <section class="flex flex-col fundo-card">
             <h1>Buscador de CEP</h1>
@@ -53,19 +53,20 @@
                     <input type="text" name="entrada" id="entrada" placeholder="00000-000" required>
                 </div>
 
-                <div id="formEndereco" class="escondido">
+                <fieldset id="formEndereco" class="escondido">
+                    <legend>Endereço</legend>
                     <label for="estado">Estado:</label>
-                    <input type="text" name="estado" id="estado" placeholder="UF">
+                    <input type="text" name="estado" id="estado" placeholder="UF" autocomplete="address-level1">
 
                     <label for="cidade">Cidade</label>
-                    <input type="text" name="cidade" id="cidade" placeholder="Cidade">
+                    <input type="text" name="cidade" id="cidade" placeholder="Cidade" autocomplete="address-level2">
 
                     <label for="rua">Rua</label>
-                    <input type="text" name="rua" id="rua" placeholder="Rua">
-                </div>
-                <p id="erro"></p>
+                    <input type="text" name="rua" id="rua" placeholder="Rua" autocomplete="address-line1">
+                </fieldset>
+                <p id="erro" aria-live="polite"></p>
 
-                <button type="submit" class="cursor-pointer block rounded-md bg-white text-black p-1 mt-10 w-full">Buscar</button>
+                <button type="submit" class="cursor-pointer block rounded-md bg-white text-black p-1 mt-10 w-full" id="btnform">Buscar</button>
             </form>
         </section>
 
@@ -77,12 +78,5 @@
     </main>
 
     <script type="module" src="src/main.js"></script>
-    <script type="importmap">
-    {
-      "imports": {
-        "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha1/dist/leaflet.js"
-      }
-    }
-  </script>
 </body>
 </html>
