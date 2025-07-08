@@ -35,3 +35,7 @@ export function MarcarAreaMapa(lat1, lon1, lat2, lon2) {
     rectangle = new Rectangle(limites, {color: 'red', weight: 1, fillOpacity: 0.1}).addTo(map);
     map.fitBounds(limites);
 }
+
+export function RedimensionarMapa() {
+    map.invalidateSize();
+}

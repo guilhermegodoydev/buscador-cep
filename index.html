@@ -34,12 +34,12 @@
     <title>Buscador de CEP</title>
 </head>
 <body>
-    <main class="flex min-h-screen items-center">
-        <section class="flex flex-col fundo-card">
+    <main class="flex lg:flex-row flex-col lg:h-screen min-h-screen">
+        <section class="fundo-card h-fit">
             <h1>Buscador de CEP</h1>
             <form>
-                <div class="flex gap-2">
-                    <p class="inline">Consultar:</p>
+                <div class="flex gap-2" id="tipoConsulta">
+                    <p>Consultar:</p>
                     
                     <input type="radio" name="consultas" value="Por CEP" id="porCEP" checked>
                     <label for="porCEP" class="mr-5">Por CEP</label>
@@ -64,18 +64,28 @@
                     <label for="rua">Rua</label>
                     <input type="text" name="rua" id="rua" placeholder="Rua" autocomplete="address-line1">
                 </fieldset>
+
                 <p id="erro" aria-live="polite"></p>
 
-                <button type="submit" class="cursor-pointer block rounded-md bg-white text-black p-1 mt-10 w-full" id="btnform">Buscar</button>
+                <button type="submit" class="cursor-pointer rounded-md bg-white text-black p-1 mt-10 w-full" id="btnform">Buscar</button>
             </form>
         </section>
 
-        <section class="flex-1 h-64">
-            <h2 class="text-center text-2xl font-bold mb-4">Localização no Mapa</h2>
+        <section id="mapSection" class="fundo-card lg:flex-1 flex flex-col lg:h-auto[!important]">
+            <h1>Localização no Mapa</h1>
             <p id="saida" class="text-center mb-4">Insira o CEP ou Endereço para visualizar a localização no mapa.</p>
-            <div id="map" class="h-full w-full"></div>
+
+            <div id="mapContainer" class="relative flex-1">
+                <!-- O leaflet coloca o mapa com z-400 por padrão -->
+                <img src="src/assets/zoom.png" alt="Ícone de ampliação" class="absolute z-401 top-2 right-2 size-11 p-1 rounded-md border-2 border-gray-400 shadow-lg bg-white cursor-pointer" id="btnZoom">
+                <div id="map" class="size-full"></div>
+            </div>
         </section>
     </main>
+
+    <footer class="flex justify-center items-center h-8 bg-gray-800 text-white">
+        <a href="https://www.flaticon.com/br/icones-gratis/ampliacao" title="ampliação ícones">Ampliação ícones criados por Kiranshastry - Flaticon</a>
+    </footer>
 
     <script type="module" src="src/main.js"></script>
 </body>

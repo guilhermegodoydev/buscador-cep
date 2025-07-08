@@ -15,8 +15,23 @@ const estado = document.getElementById('estado');
 const cidade = document.getElementById('cidade');
 const rua = document.getElementById('rua');
 const botao = document.getElementById('btnform');
+const btnZoom = document.getElementById('btnZoom');
+const mapSection = document.getElementById('mapSection');
 
 let tipoConsulta = 'cep';
+let geo;
+
+// Alguns navegadores não disparam 'resize' ao ativar o modo responsivo no F12
+let widthAtual = window.innerWidth;
+setInterval(() => {
+  if (window.innerWidth !== widthAtual) {
+    widthAtual = window.innerWidth;
+    ajustarAlturaMap();
+  }
+});
+
+window.addEventListener('resize', ajustarAlturaMap());
+window.addEventListener('load', ajustarAlturaMap());
 
 GerarMapa();
 
@@ -92,3 +107,25 @@ input.addEventListener('input', () => {
     input.value = novoValue;
   }
 });
+
+btnZoom.addEventListener('click', () => {
+  const mapContainer = document.getElementById('mapContainer');
+  mapContainer.classList.toggle('zoomMapa');
+
+  if (geo){
+    GerarMarcador(geo.lat, geo.lon);
+    MarcarAreaMapa(geo.limitesbox.lat1, geo.limitesbox.lon1, geo.limitesbox.lat2, geo.limitesbox.lon2);
+  }
+  else {
+    GerarMapa();  
+  }
+});
+
+function ajustarAlturaMap() {
+  if (window.matchMedia('(max-width: 1000px)').matches) {
+    mapSection.style.height = `calc(100vh - ${form.offsetHeight}px)`;
+  }
+  else {
+    mapSection.style.height = '';
+  }
+}

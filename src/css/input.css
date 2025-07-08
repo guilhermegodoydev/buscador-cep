@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 @layer base {    
+    h1 {
+        @apply text-center text-2xl font-bold mb-4;
+    }
+
     body {
         background-image: url('../assets/fundo.webp'), url('../assets//fundo.jpg');
         @apply m-0 bg-cover backdrop-brightness-35 min-h-screen text-white
@@ -12,6 +16,10 @@
 
     input:not([type="radio"]) {
         @apply bg-white rounded-md text-black p-1 px-2 w-full mt-2;
+    }
+
+    #tipoConsulta label {
+        @apply m-0;
     }
 }
 
@@ -26,5 +34,9 @@
 
     .escondido {
         @apply hidden;
+    }
+
+    .zoomMapa {
+        @apply absolute left-0 top-0 w-full h-full;
     }
 }
