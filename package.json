@@ -1,8 +1,9 @@
 {
   "name": "buscador-cep",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aplicação web que permite ao usuário buscar endereços a partir de um CEP ou localizar um CEP a partir de um endereço completo (estado, cidade e rua). Além de exibir as informações textuais, o sistema localiza o ponto correspondente em um mapa interativo, destacando a área aproximada do CEP.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +12,7 @@
     "url": "git+https://github.com/guilhermegodoydev/buscador-cep.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Guilherme Godoy",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/guilhermegodoydev/buscador-cep/issues"
