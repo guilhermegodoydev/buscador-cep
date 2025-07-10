@@ -1,6 +1,6 @@
 export function ExibirMsgErro(mensagem, msgErroElem, inputElem) {
   msgErroElem.classList.add('msgErro');
-  msgErroElem.textContent = mensagem;
+  msgErroElem.innerHTML = mensagem;
   if (inputElem) inputElem.focus();
 }
 
@@ -15,4 +15,8 @@ export function AlterarEstadoInputs(form, estado) {
     input.disabled = !estado;
     input.required = estado;
   });
+}
+
+export function RemoverAcentos(texto) {
+  return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }

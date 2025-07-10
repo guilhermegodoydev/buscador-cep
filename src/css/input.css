@@ -14,7 +14,7 @@
         @apply block mt-2;
     }
 
-    input:not([type="radio"]) {
+    input:not([type="radio"]), select {
         @apply bg-white rounded-md text-black p-1 px-2 w-full mt-2;
     }
 
@@ -25,11 +25,13 @@
 
 @layer utilities {
     .fundo-card {
-        @apply bg-white/20 rounded-md p-4 shadow-md m-4 border border-white/30;
+        @apply bg-white/22 rounded-md p-4 m-4 border border-white/30;
     }
 
     .msgErro {
-        @apply text-red-500 text-shadow-lg font-semibold mt-1;
+        @apply text-red-500 text-shadow-lg font-semibold mt-1 break-words;
+        text-shadow: 0 0 10
+        px black;
     }
 
     .escondido {

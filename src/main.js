@@ -1,6 +1,36 @@
 import { GerarMapa, GerarMarcador, MarcarAreaMapa } from "./modules/mapa.js";
 import { ValidarCep, BuscarEndereco, BuscarCepPorEndereco, BuscarGeo } from "./modules/cep.js";
-import { AlterarEstadoInputs, ExibirMsgErro, MontarEnderecoCompleto } from "./modules/utils.js";
+import { AlterarEstadoInputs, ExibirMsgErro, MontarEnderecoCompleto, RemoverAcentos } from "./modules/utils.js";
+
+const estados = [
+  { nome: "Acre", sigla: "AC" },
+  { nome: "Alagoas", sigla: "AL" },
+  { nome: "Amapá", sigla: "AP" },
+  { nome: "Amazonas", sigla: "AM" },
+  { nome: "Bahia", sigla: "BA" },
+  { nome: "Ceará", sigla: "CE" },
+  { nome: "Distrito Federal", sigla: "DF" },
+  { nome: "Espírito Santo", sigla: "ES" },
+  { nome: "Goiás", sigla: "GO" },
+  { nome: "Maranhão", sigla: "MA" },
+  { nome: "Mato Grosso", sigla: "MT" },
+  { nome: "Mato Grosso do Sul", sigla: "MS" },
+  { nome: "Minas Gerais", sigla: "MG" },
+  { nome: "Pará", sigla: "PA" },
+  { nome: "Paraíba", sigla: "PB" },
+  { nome: "Paraná", sigla: "PR" },
+  { nome: "Pernambuco", sigla: "PE" },
+  { nome: "Piauí", sigla: "PI" },
+  { nome: "Rio de Janeiro", sigla: "RJ" },
+  { nome: "Rio Grande do Norte", sigla: "RN" },
+  { nome: "Rio Grande do Sul", sigla: "RS" },
+  { nome: "Rondônia", sigla: "RO" },
+  { nome: "Roraima", sigla: "RR" },
+  { nome: "Santa Catarina", sigla: "SC" },
+  { nome: "São Paulo", sigla: "SP" },
+  { nome: "Sergipe", sigla: "SE" },
+  { nome: "Tocantins", sigla: "TO" }
+];
 
 const input = document.getElementById('entrada');
 const label = document.getElementById('lblEntrada');
@@ -11,12 +41,10 @@ const form = document.querySelector('form');
 const saida = document.getElementById('saida');
 const formCep = document.getElementById('formCep');
 const formEndereco = document.getElementById('formEndereco');
-const estado = document.getElementById('estado');
-const cidade = document.getElementById('cidade');
-const rua = document.getElementById('rua');
 const botao = document.getElementById('btnform');
 const btnZoom = document.getElementById('btnZoom');
 const mapSection = document.getElementById('mapSection');
+const continerEstados = document.getElementById('estados');
 
 let tipoConsulta = 'cep';
 let geo;
@@ -34,6 +62,15 @@ window.addEventListener('resize', ajustarAlturaMap());
 window.addEventListener('load', ajustarAlturaMap());
 
 GerarMapa();
+
+console.log(continerEstados);
+estados.forEach(est => {
+  let option = document.createElement('option');
+  option.value = est.sigla;
+  option.textContent = est.nome;
+
+  continerEstados.appendChild(option);
+});
 
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
@@ -55,7 +92,11 @@ form.addEventListener('submit', async function(e) {
       saida.textContent = 'Endereço: ' + enderecoExibicao;
       geo = await BuscarGeo(enderecoExibicao);
     } else {
-      const cepLocal = await BuscarCepPorEndereco(estado.value, cidade.value, rua.value);
+      const estado = continerEstados.value;
+      const cidade = document.getElementById('cidade').value;
+      const rua = document.getElementById('rua').value;
+
+      const cepLocal = await BuscarCepPorEndereco(RemoverAcentos(estado), RemoverAcentos(cidade), RemoverAcentos(rua));
       saida.textContent = 'CEP: ' + cepLocal;
       const dataCep = await BuscarEndereco(cepLocal);
       enderecoExibicao = MontarEnderecoCompleto(dataCep);
@@ -65,7 +106,7 @@ form.addEventListener('submit', async function(e) {
     GerarMarcador(geo.lat, geo.lon);
     MarcarAreaMapa(geo.limitesbox.lat1, geo.limitesbox.lon1, geo.limitesbox.lat2, geo.limitesbox.lon2);
   } catch (error) {
-    ExibirMsgErro('Erro ao buscar dados. Tente novamente.', msgErro, input);
+    ExibirMsgErro('Erro ao Buscar dados. <br> Verifique as informações e tente novamente', msgErro, input);
     console.error(error);
   }
 

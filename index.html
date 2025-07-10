@@ -16,7 +16,6 @@
     <!-- Meta Tags OG -->
     <meta property="og:title" content="Buscador de CEP">
     <meta property="og:description" content="Encontre o CEP e veja a localização no mapa.">
-    <meta property="og:image" content="URL da imagem">
     <meta property="og:url" content="URL da página">
     <meta property="og:type" content="website">
 
@@ -24,7 +23,6 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Buscador de CEP">
     <meta name="twitter:description" content="Encontre o CEP e veja a localização no mapa.">
-    <meta name="twitter:image" content="URL da imagem">
     <meta name="twitter:url" content="URL da página">
     <meta name="twitter:type" content="website">
 
@@ -35,7 +33,7 @@
 </head>
 <body>
     <main class="flex lg:flex-row flex-col lg:h-screen min-h-screen">
-        <section class="fundo-card h-fit">
+        <section class="fundo-card h-fit lg:w-1/4">
             <h1>Buscador de CEP</h1>
             <form>
                 <div class="flex gap-2" id="tipoConsulta">
@@ -55,8 +53,8 @@
 
                 <fieldset id="formEndereco" class="escondido">
                     <legend>Endereço</legend>
-                    <label for="estado">Estado:</label>
-                    <input type="text" name="estado" id="estado" placeholder="UF" autocomplete="address-level1">
+                    <label for="estados">Estado:</label>
+                    <select name="estados" id="estados"></select>
 
                     <label for="cidade">Cidade</label>
                     <input type="text" name="cidade" id="cidade" placeholder="Cidade" autocomplete="address-level2">
