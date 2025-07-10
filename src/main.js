@@ -1,4 +1,4 @@
-import { GerarMapa, GerarMarcador, MarcarAreaMapa } from "./modules/mapa.js";
+import { GerarMapa, GerarMarcador, MarcarAreaMapa, RedimensionarMapa } from "./modules/mapa.js";
 import { ValidarCep, BuscarEndereco, BuscarCepPorEndereco, BuscarGeo } from "./modules/cep.js";
 import { AlterarEstadoInputs, ExibirMsgErro, MontarEnderecoCompleto, RemoverAcentos } from "./modules/utils.js";
 
@@ -152,14 +152,7 @@ input.addEventListener('input', () => {
 btnZoom.addEventListener('click', () => {
   const mapContainer = document.getElementById('mapContainer');
   mapContainer.classList.toggle('zoomMapa');
-
-  if (geo){
-    GerarMarcador(geo.lat, geo.lon);
-    MarcarAreaMapa(geo.limitesbox.lat1, geo.limitesbox.lon1, geo.limitesbox.lat2, geo.limitesbox.lon2);
-  }
-  else {
-    GerarMapa();  
-  }
+  RedimensionarMapa();
 });
 
 function ajustarAlturaMap() {
