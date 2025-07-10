@@ -32,5 +32,8 @@ export async function BuscarGeo(endereco) {
 export function ValidarCep(cep){
     const valor = cep.replace(/\D/g, '');
 
-    return valor.length === 8;
+    if (valor.length !== 8) return false;
+    if (/^(\d)\1{7}$/.test(valor)) return false;
+
+    return true;
 }
