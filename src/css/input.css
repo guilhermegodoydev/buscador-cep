@@ -30,8 +30,7 @@
 
     .msgErro {
         @apply text-red-500 text-shadow-lg font-semibold mt-1 break-words;
-        text-shadow: 0 0 10
-        px black;
+        text-shadow: 0 0 10px black;
     }
 
     .escondido {
