@@ -19,7 +19,7 @@ Aplicação web que permite ao usuário buscar endereços a partir de um **CEP**
 
 ## 🚀 Acesso ao Projeto
 
-O projeto será disponibilizado por meio de um link de deploy (em breve).
+O projeto é acessado apenas pelo link **[CepMap](https://cepmap.netlify.app/)**
 
 ## ⚠️ Rodar Localmente
 
