@@ -109,8 +109,9 @@ form.addEventListener('submit', async function(e) {
     ExibirMsgErro('Erro ao Buscar dados. <br> Verifique as informações e tente novamente', msgErro, input);
     console.error(error);
   }
-
-  if (botao) botao.disabled = false;
+  finally {
+    if (botao) botao.disabled = false;
+  }
 });
 
 function AlternarConsulta(tipo) {
