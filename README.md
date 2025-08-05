@@ -21,8 +21,49 @@ Aplicação web que permite ao usuário buscar endereços a partir de um **CEP**
 
 O projeto é acessado apenas pelo link **[CepMap](https://cepmap.netlify.app/)**
 
-## ⚠️ Rodar Localmente
+## ⚙️ Rodar localmente (Windows)
 
-O projeto **não está pronto para ser executado localmente**, pois depende de uma chave de API privada da **LocationIQ**, que não está incluída no repositório por motivos de segurança.
+### Pré-requisitos
 
-Sem essa chave, as principais funcionalidades do projeto não funcionarão corretamente.
+- Chave da API LocationIQ (gratuita em [https://locationiq.com](https://locationiq.com))
+- Node.js instalado (para usar o Netlify CLI)
+- Netlify CLI instalado globalmente (ver passo 4)
+
+### Passos para rodar localmente
+
+1. Clone o repositório:
+
+```powershell
+git clone https://github.com/guilhermegodoydev/buscador-cep.git
+cd buscador-cep
+```
+
+2. Copie o arquivo de variáveis de ambiente e adicione sua chave:
+
+```powershell
+copy .env.example .env
+```
+
+3. Abra o arquivo .env em um editor de texto e substitua LOCATIONIQ pela sua chave real.
+
+4. Instale o Netlify CLI globalmente (se ainda não tiver):
+
+```powershell
+npm install -g netlify-cli
+```
+
+5. Rode o servidor local com Netlify CLI para ativar as funções serverless:
+
+```powershell
+netlify dev
+```
+
+6. Abra o navegador no endereço que o Netlify CLI indicar (normalmente http://localhost:8888).
+
+### Observações
+
+- Sem rodar o Netlify CLI (ou sem deploy no Netlify), as funções proxy não funcionarão e o mapa pode não carregar.
+
+- Se quiser ver apenas o front-end sem mapa, pode abrir o arquivo index.html diretamente no navegador, mas as funcionalidades do mapa ficarão limitadas.
+
+- A chave da API LocationIQ é necessária para a exibição dos mapas. Você pode obter uma chave gratuita no site oficial.
