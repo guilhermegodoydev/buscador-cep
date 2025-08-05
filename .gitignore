@@ -27,3 +27,5 @@ jspm_packages/
 # Variáveis de Ambiente Locais
 .env
 .env.*
+
+!.env.example
